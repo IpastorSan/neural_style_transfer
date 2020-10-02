@@ -130,6 +130,7 @@ def compute_loss(combination_image, content_image, style_image):
 
     #add total variation loss
     loss += total_variation_weight * total_loss(combination_image)
+    return loss
 
 #···········Loss and gradient computation··········
 
@@ -151,4 +152,10 @@ combination_image = tf.Variable(preprocess_image(content_image_path)) #look into
 iterations = 4000
 for i in range(1, iterations + 1):
     loss, gradients = compute_loss_and_gradients(combination_image, content_image, style_image)
-    optimizer.apply_gradients([gradients, combination_image]) #investigar
+    optimizer.apply_gradients([(gradients, combination_image)]) #investigar
+    if i % 100 == 0:
+        print(f"Iteration {i}: loss={loss}")
+        img = unprocess_image(combination_image.numpy())
+        fname = result_prefix +"_at_iteration_"+str(iterations)+".png"
+        tf.keras.preprocessing.image.save_img(fname, img)
+
