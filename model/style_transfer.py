@@ -80,11 +80,17 @@ def content_loss(content, combination):
 #Finally, the third loss is designed to keep the generated image globally coherent
 
 def total_loss(x):
+    #this loss is intended to act as a regularization of high frequency vertical and horizontal artifacts of an image
     a = tf.square(x[:, :img_nrows - 1, :img_ncols - 1, :] - x[:, 1:, :img_ncols - 1, :])
     b = tf.square(
         x[:, : img_nrows - 1, : img_ncols - 1, :] - x[:, : img_nrows - 1, 1:, :]
     )
-    return tf.reduce_sum(tf.pow(a + b, 1.25)) #locura total, mirar la formula
+    return tf.reduce_sum(tf.pow(a + b, 1.25))
+
+#This formula is more explicit, but Tensorflow 2.0 has a direct implementation
+#def total_loss(x):
+#   x = tf.image.total_variation(x).numpy
+#   return x
 
 #···················Models··························
 
