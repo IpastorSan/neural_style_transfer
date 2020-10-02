@@ -58,7 +58,7 @@ def gram_matrix(x):
     x = tf.squeeze(x)
     x = tf.transpose(x, (2,0,1))   #shape (C,H,W)
     features = tf.reshape(x, (tf.shape(x)[0], -1))  #shape (C, H*W)
-    gram = tf.matmul(features, tf.transpose(features)) #dot product of features and transposed of features (autocorrelation)
+    gram = tf.matmul(features, tf.transpose(features)) #outer product of features and its transposed
     return gram
 
 #The style loss is designed to transfer the characteristics of the "style image" into the content image
@@ -156,6 +156,6 @@ for i in range(1, iterations + 1):
     if i % 100 == 0:
         print(f"Iteration {i}: loss={loss}")
         img = unprocess_image(combination_image.numpy())
-        fname = result_prefix +"_at_iteration_"+str(iterations)+".png"
+        fname = result_prefix +"_at_iteration_"+str(i)+".png"
         tf.keras.preprocessing.image.save_img(fname, img)
 
