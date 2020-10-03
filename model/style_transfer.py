@@ -9,7 +9,7 @@ style_image_path = "C:/Users/pasto/projects/GAN_neural_style_transfer/images/pol
 #content_image = tf.keras.preprocessing.image.load_img("temple_of_heaven_content.jpg")
 #style_image = tf.keras.preprocessing.image.load_img("chinese_painting_style.jpg")
 
-result_prefix = "vader_generated" #???
+result_prefix = "vader_generated"
 
 #Weights of the different weight components (leap of faith)
 total_variation_weight = 1e-6
@@ -21,10 +21,6 @@ width, height = tf.keras.preprocessing.image.load_img(content_image_path).size
 img_nrows = 400
 img_ncols = int(width*img_nrows / height)
 
-#························See the images·····················································
-from IPython.display import Image, display
-display(Image(content_image_path))
-display(Image(style_image_path))
 
 #························Image preprocessing/deprocessing utilities···························
 def preprocess_image(image_path):
